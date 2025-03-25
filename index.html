@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📖 A Special Note for You 💖</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap');
+
+        body {
+            background: #fbe7eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Dancing Script', cursive;
+            text-align: center;
+        }
+
+        .diary {
+            background: url('https://www.transparenttextures.com/patterns/aged-paper.png');
+            width: 60%;
+            max-width: 500px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 3px solid #d81b60;
+            position: relative;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #d81b60;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .message-box, .photo {
+            display: none;
+            animation: fadeIn 1.5s ease-in-out;
+            margin-top: 10px;
+        }
+
+        .btn {
+            background: #d81b60;
+            color: white;
+            padding: 12px 24px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn:hover { background: #c2185b; transform: scale(1.1); }
+
+        img {
+            width: 140px;
+            height: 140px;
+            border-radius: 10px;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+            border: 3px solid #d81b60;
+        }
+    </style>
+</head>
+<body>
+    <div class="diary">
+        <div class="photo"><img src="https://source.unsplash.com/140x140/?love,memories" alt="Special Moment"></div>
+        <h1>📖 A Special Note for You 💖</h1>
+        <button class="btn" id="openBtn" onclick="revealSurprise()">Open the Diary</button>
+        <button class="btn" id="closeBtn" onclick="closeDiary()" style="display: none;">Close</button>
+        <div class="message-box" id="specialMessage"><p id="typingText"></p></div>
+        <audio id="music" loop>
+            <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+    <script>
+        let message = `Your presence feels like a warm embrace on the coldest days. Your laughter is a melody that lingers in my heart, and your eyes hold a universe I could get lost in forever. With you, every moment feels special, every silence feels comfortable, and every heartbeat whispers your name. 💖`;
+        let isMessageTyped = false;
+
+        function revealSurprise() {
+            let messageBox = document.getElementById("specialMessage");
+            let music = document.getElementById("music");
+            document.querySelector(".photo").style.display = "block";
+            messageBox.style.display = "block";
+            document.getElementById("openBtn").style.display = "none";
+            document.getElementById("closeBtn").style.display = "inline-block";
+
+            music.volume = 0.5;
+            music.play().catch(error => console.log("Autoplay blocked: User interaction needed."));
+
+            if (!isMessageTyped) {
+                typeMessage(message);
+                isMessageTyped = true;
+            }
+        }
+
+        function closeDiary() {
+            document.querySelector(".photo").style.display = "none";
+            document.getElementById("specialMessage").style.display = "none";
+            document.getElementById("openBtn").style.display = "inline-block";
+            document.getElementById("closeBtn").style.display = "none";
+            document.getElementById("music").pause();
+            document.getElementById("music").currentTime = 0;
+        }
+
+        function typeMessage(text) {
+            let i = 0;
+            let speed = 50;
+            function type() {
+                if (i < text.length) {
+                    document.getElementById("typingText").innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+    </script>
+</body>
+</html>
